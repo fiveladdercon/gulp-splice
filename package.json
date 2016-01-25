@@ -1,0 +1,36 @@
+{
+  "name": "gulp-splice",
+  "version": "1.0.0",
+  "description": "Splice one file into another",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/gulp-splice-test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fiveladdercon/gulp-splice.git"
+  },
+  "keywords": [
+    "gulp",
+    "include",
+    "splice",
+    "insert",
+    "inject",
+    "join"
+  ],
+  "author": "fiveladdercon",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fiveladdercon/gulp-splice/issues"
+  },
+  "homepage": "https://github.com/fiveladdercon/gulp-splice#readme",
+  "dependencies": {
+    "gulp-util": "^3.0.7",
+    "path": "^0.12.7",
+    "through2": "^2.0.0"
+  },
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "mocha": "^2.3.4"
+  }
+}
