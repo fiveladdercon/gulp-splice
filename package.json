@@ -1,10 +1,10 @@
 {
   "name": "gulp-splice",
   "version": "1.0.0",
-  "description": "Splice one file into another",
+  "description": "Splice one file into another in a gulp stream",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/gulp-splice-test.js"
+    "test": "mocha test/test.js"
   },
   "repository": {
     "type": "git",
@@ -26,7 +26,6 @@
   "homepage": "https://github.com/fiveladdercon/gulp-splice#readme",
   "dependencies": {
     "gulp-util": "^3.0.7",
-    "path": "^0.12.7",
     "through2": "^2.0.0"
   },
   "devDependencies": {

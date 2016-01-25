@@ -47,12 +47,16 @@ module.exports = function (opts) {
 		} else if (!outerBuf && !opts.outer) {
 			cb(new gutil.PluginError('gulp-splice','No outer file'));
 		} else {
-			if (!innerBuf)  innerBuf  = fs.readFileSync(opts.inner);
-			if (!outerBuf)  outerBuf  = fs.readFileSync(opts.outer);
-			if (!outerFile) outerFile = new gutil.File({path : path.join(process.cwd(), opts.outer)});
+			if (!innerBuf) innerBuf = fs.readFileSync(opts.inner);
+			if (!outerBuf) outerBuf = fs.readFileSync(opts.outer);
+			if (!outerFile) {
+				outerFile = new gutil.File();
+				outerFile.path = path.isAbsolute(opts.outer) ? opts.outer :
+								 path.normalize(path.join(process.cwd(), opts.outer));
+			}
 		    var index = outerBuf.indexOf(opts.key);
 		    if (index<0) {
-		    	cb(new gutil.PluginError('gulp-splice','Key '+opts.key+' not found in '+opts.outer || path.basename(outerFile.path)))
+		    	cb(new gutil.PluginError('gulp-splice','Key '+opts.key+' not found in '+path.basename(outerFile.path)))
 		    } else {
 				outerFile.contents = Buffer.concat([
 							outerBuf.slice(0,index),
