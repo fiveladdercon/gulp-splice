@@ -1,7 +1,8 @@
-var fs      = require('fs');
-var path    = require('path');
-var gutil   = require('gulp-util');
-var through = require('through2').obj;
+var fs     = require('fs');
+var path   = require('path');
+var stream = require('stream');
+var gutil  = require('gulp-util');
+// var through = require('through2').obj;
 
 module.exports = function (opts) {
 	if (!opts) throw new gutil.PluginError('gulp-splice', 'Missing options');
@@ -16,36 +17,36 @@ module.exports = function (opts) {
 	var outerBuf;
 	var outerFile;
 
-	return through(read,write);
+	return new stream.Transform({ objectMode: true, transform: read, flush : write});
 
-	function read (file, enc, cb) {
+	function read (file, encoding, next) {
 		if (file.isNull()) {
-			cb(null,file);
+			next(null,file);
 		}  else if (file.isStream()) {
-			cb(new gutil.PluginError('gulp-splice','Streams not supported'));
+			next(new gutil.PluginError('gulp-splice','Streams not supported'));
 		} else {
 			if (!outerBuf && (file.contents.indexOf(opts.key)>=0) && (!opts.outer || (file.path.indexOf(opts.outer)>=0))) {
 				outerFile = file.clone({contents:false});
 				outerBuf  = new Buffer(file.contents);
-				cb();
+				next();
 			} else if (!opts.inner) {
 				innerBuf = !innerBuf ? new Buffer(file.contents) : Buffer.concat([innerBuf,file.contents],innerBuf.length + file.contents.length);
-				cb();
+				next();
 			} else if (file.path.indexOf(opts.inner)>=0) {
 				innerBuf = new Buffer(file.contents);
-				cb();
+				next();
 			} else {
-				cb(null,file);
+				next(null,file);
 			}
 		}
 	}
 
-	function write (cb) {
+	function write (done) {
 		var self = this;
 		if (!innerBuf && !opts.inner) {
-			cb(new gutil.PluginError('gulp-splice','No inner file'));
+			done(new gutil.PluginError('gulp-splice','No inner file'));
 		} else if (!outerBuf && !opts.outer) {
-			cb(new gutil.PluginError('gulp-splice','No outer file'));
+			done(new gutil.PluginError('gulp-splice','No outer file'));
 		} else {
 			if (!innerBuf) innerBuf = fs.readFileSync(opts.inner);
 			if (!outerBuf) outerBuf = fs.readFileSync(opts.outer);
@@ -56,7 +57,7 @@ module.exports = function (opts) {
 			}
 		    var index = outerBuf.indexOf(opts.key);
 		    if (index<0) {
-		    	cb(new gutil.PluginError('gulp-splice','Key '+opts.key+' not found in '+path.basename(outerFile.path)))
+		    	done(new gutil.PluginError('gulp-splice','Key '+opts.key+' not found in '+path.basename(outerFile.path)))
 		    } else {
 				outerFile.contents = Buffer.concat([
 							outerBuf.slice(0,index),
@@ -64,7 +65,7 @@ module.exports = function (opts) {
 							outerBuf.slice(index + opts.key.length)
 							], outerBuf.length - opts.key.length + innerBuf.length);
 				self.push(outerFile);
-				cb();
+				done();
 			}
 		}
 	}
