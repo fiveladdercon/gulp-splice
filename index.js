@@ -2,7 +2,6 @@ var fs     = require('fs');
 var path   = require('path');
 var stream = require('stream');
 var gutil  = require('gulp-util');
-// var through = require('through2').obj;
 
 module.exports = function (opts) {
 	if (!opts) throw new gutil.PluginError('gulp-splice', 'Missing options');
