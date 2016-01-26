@@ -57,7 +57,7 @@ module.exports = function (opts) {
 			}
 		    var index = outerBuf.indexOf(opts.key);
 		    if (index<0) {
-		    	done(new gutil.PluginError('gulp-splice','Key '+opts.key+' not found in '+path.basename(outerFile.path)))
+		    	done(new gutil.PluginError('gulp-splice','Key '+opts.key+' not found in '+path.basename(outerFile.path)));
 		    } else {
 				outerFile.contents = Buffer.concat([
 							outerBuf.slice(0,index),

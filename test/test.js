@@ -79,7 +79,7 @@ describe('gulp-splice', function () {
 			var stream  = splice({key: '<#key#>', outer: outerLoad});
 			var spliced = open('outer.txt', 'This is outer loaded content.'+EOL,
 				                            'This is inner piped content.' +EOL,
-				                            'This is outer loaded content.'+EOL)
+				                            'This is outer loaded content.'+EOL);
 			stream.on('data',queue);
 			stream.write(innerPipe);
 			stream.end(function () {
@@ -94,7 +94,7 @@ describe('gulp-splice', function () {
 			var stream  = splice({key: '<#key#>', inner: innerLoad});
 			var spliced = open('outer.txt', 'This is outer piped content.' +EOL,
 				                            'This is inner loaded content.'+EOL,
-				                            'This is outer piped content.' +EOL)
+				                            'This is outer piped content.' +EOL);
 			stream.on('data',queue);
 			stream.write(outerPipe);
 			stream.end(function () {
@@ -109,7 +109,7 @@ describe('gulp-splice', function () {
 			var stream  = splice({key: '<#key#>', outer:outerLoad, inner: innerLoad});
 			var spliced = open('outer.txt', 'This is outer loaded content.'+EOL,
 				                            'This is inner loaded content.'+EOL,
-				                            'This is outer loaded content.'+EOL)
+				                            'This is outer loaded content.'+EOL);
 			stream.on('data',queue);
 			stream.end(function () {
 				expect(files.length).to.equal(1);
@@ -123,7 +123,7 @@ describe('gulp-splice', function () {
 			var stream  = splice({key: '<#key#>', outer:outerLoad, inner: innerLoad});
 			var spliced = open('outer.txt', 'This is outer piped content.'+EOL,
 				                            'This is inner piped content.'+EOL,
-				                            'This is outer piped content.'+EOL)
+				                            'This is outer piped content.'+EOL);
 			stream.on('data',queue);
 			stream.write(innerPipe);
 			stream.write(outerPipe);
@@ -215,7 +215,7 @@ describe('gulp-splice', function () {
 			stream.end(function () {
 				expect(files.length).to.equal(2);
 				expect(files[0].path).to.equal(emptyPipe.path);
-				expect(files[0].contents).to.be.null;
+				expect(files[0].contents).to.equal(null);
 				expect(files[1].path).to.equal(spliced.path);
 				expect(files[1].contents.toString()).to.equal(spliced.contents.toString());
 				done();
@@ -289,7 +289,7 @@ describe('gulp-splice', function () {
 
 		it('throws an error if no key is specified', function () {
 			expect(function () { 
-				splice({inner:innerLoad})
+				splice({inner:innerLoad});
 			}).to.throw('Missing required key option');
 		});
 
