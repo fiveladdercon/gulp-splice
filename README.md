@@ -6,6 +6,12 @@ Splices one file into another in a gulp pipeline.
 
 `npm install gulp-splice`
 
+```javascript
+var splice = require('gulp-splice');
+
+gulp.src(...).pipe(slice(options))
+```
+
 ## Usage
 
 The **inner** file is spliced into the **outer** file by replacing the first occurancy of the **key** in the outer file
@@ -20,7 +26,7 @@ This is outer file content.
 
 ```
 inner.txt
----------
+
 This is inner file content.
 ```
 
@@ -30,7 +36,7 @@ gulp.src(['inner.txt','outer.txt']).pipe(splice('<#key#>'))
 
 ```
 outer.txt
----------
+
 This is outer file content.
 This is inner file content.
 This is outer file content.
@@ -51,7 +57,7 @@ And all three produce the same result as the original:
 
 ```
 outer.txt
----------
+
 This is outer file content.
 This is inner file content.
 This is outer file content.
@@ -69,7 +75,7 @@ the key:
 
 ```
 outer.txt
----------
+
 This is outer file content.
 This is non-outer file 1 content.
 This is non-outer file 2 content.
@@ -87,16 +93,20 @@ gulp.src('*.txt').pipe(splice({key: '<#key#>', inner:'file1.txt'))
 
 ```
 outer.txt
----------
+
 This is outer file content.
 This is file 1 content.
 This is outer file content.
 ```
 ```
 file2.txt
+
+...
 ```
 ```
 file3.txt
+
+...
 ```
 ```
 ...
@@ -132,34 +142,34 @@ to form the inner file.
 
 ## Example
 
-Inline HTML view templates into the bottom of the index:
+Here's an example that inlines HTML view templates into the bottom of the index.html:
 
 ```
 index.html
-----------
+
 <html>
 <body>
 <h1>Main</h1>
-<#views##
+##views##
 </body>
 </html>
 ```
 
 ```
 partial-A.html
---------------
+
 <h1>View A</h1>
 ```
 
 ```
 partial-B.html
---------------
+
 <h1>View B</h1>
 ```
 
 ```
 partial-C.html
---------------
+
 <h1>View C</h1>
 ```
 
@@ -172,7 +182,7 @@ gulp.src('*.html')
 
 ```
 dist/index.html
----------------
+
 <html><body><h1>Main</h1><h1>View A</h1><h1>View B</h1><h1>View C</h1></body></html>
 ```
 
