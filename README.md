@@ -2,15 +2,9 @@
 
 Splices one file into another in a gulp pipeline.
 
-## Installation
+## Install
 
-`npm install gulp-splice`
-
-```javascript
-var splice = require('gulp-splice');
-
-gulp.src(...).pipe(slice(options))
-```
+`> npm install gulp-splice`
 
 ## Usage
 
@@ -18,7 +12,8 @@ The **inner** file is spliced into the **outer** file by replacing the first occ
 with the contents of the inner file:
 
 ```
-*outer.txt*
+outer.txt
+
 This is outer file content.
 <#key#>
 This is outer file content.
@@ -31,6 +26,8 @@ This is inner file content.
 ```
 
 ```javascript
+var splice = require('gulp-splice');
+
 gulp.src(['inner.txt','outer.txt']).pipe(splice('<#key#>'))
 ```
 
