@@ -4,7 +4,9 @@ Splices one file into another in a gulp pipeline.
 
 ## Install
 
-`> npm install gulp-splice`
+```
+> npm install gulp-splice
+```
 
 ## Usage
 
@@ -66,8 +68,8 @@ You can also send more than two files in through the pipe:
 gulp.src('*.txt').pipe(splice('<#key#>'))
 ```
 
-In the absence of inner and outer options all *non-outer* files are _concatinated_ to form 
-a single inner file and spliced into the outer file, which is the *first* file that contains
+In the absence of inner and outer options all *non-outer files are concatinated* to form 
+a single inner file and spliced into the outer file, which is the first file that contains
 the key:
 
 ```
@@ -183,7 +185,8 @@ dist/index.html
 <html><body><h1>Main</h1><h1>View A</h1><h1>View B</h1><h1>View C</h1></body></html>
 ```
 
+### Test
 
-
-
-
+```
+> npm test
+```
