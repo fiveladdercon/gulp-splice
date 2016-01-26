@@ -19,17 +19,18 @@ This is outer file content.
 ```
 
 ```
-*inner.txt*
+inner.txt
+---------
 This is inner file content.
 ```
 
 ```javascript
-*gulpfile.js*
 gulp.src(['inner.txt','outer.txt']).pipe(splice('<#key#>'))
 ```
 
 ```
-*outer.txt*
+outer.txt
+---------
 This is outer file content.
 This is inner file content.
 This is outer file content.
@@ -39,8 +40,6 @@ In the above, both files entered through the pipe.  But you can also specify inn
 or outer files that do not enter through the pipe:
 
 ```javascript
-*gulpfile.js*
-
 gulp.src('outer.txt').pipe(splice({key:'<#key#>', inner:'inner.txt'}))
 
 gulp.src('inner.txt').pipe(splice({key:'<#key#>', outer:'outer.txt'}))
@@ -51,7 +50,8 @@ gulp.src().pipe(splice({key:'<#key#>', inner:'inner.txt', outer:'outer.txt' }))
 And all three produce the same result as the original:
 
 ```
-*outer.txt*
+outer.txt
+---------
 This is outer file content.
 This is inner file content.
 This is outer file content.
@@ -60,7 +60,6 @@ This is outer file content.
 You can also send more than two files in through the pipe:
 
 ```javascript
-*gulpfile.js*
 gulp.src('*.txt').pipe(splice('<#key#>'))
 ```
 
@@ -69,7 +68,8 @@ a single inner file and spliced into the outer file, which is the *first* file t
 the key:
 
 ```
-*outer.txt*
+outer.txt
+---------
 This is outer file content.
 This is non-outer file 1 content.
 This is non-outer file 2 content.
@@ -82,26 +82,24 @@ Adding an inner option disables the concatination of non-outer files, and all ot
 not involved in the splice are passed through:
 
 ```javascript
-*gulpfile.js*
 gulp.src('*.txt').pipe(splice({key: '<#key#>', inner:'file1.txt'))
 ```
 
 ```
-*outer.txt*
+outer.txt
+---------
 This is outer file content.
 This is file 1 content.
 This is outer file content.
 ```
 ```
-*file2.txt*
+file2.txt
+```
+```
+file3.txt
+```
+```
 ...
-```
-```
-*file3.txt*
-...
-```
-```
-*...*
 ```
 
 ## API
@@ -137,7 +135,8 @@ to form the inner file.
 Inline HTML view templates into the bottom of the index:
 
 ```
-*index.html*
+index.html
+----------
 <html>
 <body>
 <h1>Main</h1>
@@ -147,22 +146,24 @@ Inline HTML view templates into the bottom of the index:
 ```
 
 ```
-*partial-A.html*
+partial-A.html
+--------------
 <h1>View A</h1>
 ```
 
 ```
-*partial-B.html*
+partial-B.html
+--------------
 <h1>View B</h1>
 ```
 
 ```
-*partial-C.html*
+partial-C.html
+--------------
 <h1>View C</h1>
 ```
 
 ```javascript
-*gulpfile.js*
 gulp.src('*.html')
 	.pipe(htmlmin())
 	.pipe(splice('##views##'))
@@ -170,7 +171,8 @@ gulp.src('*.html')
 ```
 
 ```
-*dist/index.html*
+dist/index.html
+---------------
 <html><body><h1>Main</h1><h1>View A</h1><h1>View B</h1><h1>View C</h1></body></html>
 ```
 
